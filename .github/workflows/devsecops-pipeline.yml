@@ -1,0 +1,24 @@
+name: "DevSecOps IaC Security Pipeline"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  terraform-security-scan:
+    name: "Checkov SAST Scan"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Checkov Security Scan
+        name: Checkov Static Code Analysis
+        uses: bridgecrewio/checkov-action@master
+        with:
+          framework: terraform
+          output_format: cli
+          soft_fail: false # Fails the pipeline if critical misconfigurations are found
