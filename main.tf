@@ -13,7 +13,7 @@ provider "azurerm" {
   skip_provider_registration = true # Skips automatic provider registration to prevent network timeouts
 }
 
-# Secure Resource Group
+# For Securing Resoiurce Group only oo
 resource "azurerm_resource_group" "sec_rg" {
   name     = var.resource_group_name
   location = var.location
@@ -25,7 +25,7 @@ resource "azurerm_resource_group" "sec_rg" {
   }
 }
 
-# Secure Storage Account (Enforcing Encryption & Zero Public Access)
+# for securing Account Storage ( Encryption & Zero Public Access)
 resource "azurerm_storage_account" "secure_storage" {
   name                     = var.storage_account_name
   resource_group_name      = azurerm_resource_group.sec_rg.name
@@ -33,7 +33,7 @@ resource "azurerm_storage_account" "secure_storage" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  # Security Hardening Controls
+  # Security of the Hardening Controls
   min_tls_version                 = "TLS1_2"
   https_traffic_only_enabled      = true
   public_network_access_enabled   = false

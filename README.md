@@ -80,3 +80,22 @@ secure-iaac-pipeline/
 ## Professional Impact
 
 This project bridges the gap between cloud engineering and security operations by demonstrating automated compliance checks, version-controlled infrastructure, and secure cloud defaults aligned with industry security standards.
+
+```mermaid
+graph TD
+    subgraph Local Environment
+        Dev[Developer / VS Code] -->|Write Terraform IaC| Code[(main.tf)]
+        Code -->|Git Commit & Push| Git[Local Git Repository]
+    end
+
+    subgraph GitHub & CI/CD Pipeline
+        Git -->|Push to Main| GH[GitHub Repository]
+        GH -->|Trigger Workflow| Actions[GitHub Actions CI/CD]
+        Actions -->|Run Checkov SAST| Scan{Security Compliance Scan}
+    end
+
+    subgraph Azure Cloud Subscription
+        Scan -->|Pass / Soft Fail| TF[Terraform Apply]
+        TF -->|Provision Resources| Azure[(Azure Resource Group)]
+        Azure -->|Secure Storage| Storage[Hardened Storage Account<br/>- TLS 1.2 Enforced<br/>- Public Access Disabled<br/>- Managed Identity / RBAC]
+    end
